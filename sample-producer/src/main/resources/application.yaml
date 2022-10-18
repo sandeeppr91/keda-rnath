@@ -1,0 +1,16 @@
+server:
+  port: 8098
+spring:
+  application:
+    name: sample-producer
+  kafka:
+    bootstrap-servers: kafka-service:9092
+    producer:
+      properties:
+        max:
+          block:
+            ms: 10000
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher

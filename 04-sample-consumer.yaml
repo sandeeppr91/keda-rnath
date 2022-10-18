@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sample-consumer-svc
+spec:
+  selector:
+    app: sample-consumer
+  ports:
+    - port: 8099
+      targetPort: 8099
+  type: ClusterIP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-consumer
+spec:
+  selector:
+    matchLabels:
+      app: sample-consumer
+  strategy:
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 20%
+    type: RollingUpdate
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: sample-consumer
+    spec:
+      containers:
+        - name: sample-consumer
+          image: sample-consumer:1
+          ports:
+            - name: sample-consumer
+              containerPort: 8099
+          imagePullPolicy: Never                  

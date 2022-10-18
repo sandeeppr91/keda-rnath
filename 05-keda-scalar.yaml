@@ -1,0 +1,21 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: kafka-scaled-object
+  namespace: keda
+  labels:
+    deploymentName: sample-consumer # Required Name of the deployment we want to scale.
+spec:
+  scaleTargetRef:
+    name: sample-consumer
+  pollingInterval: 5  
+  minReplicaCount: 1
+  maxReplicaCount: 3
+  triggers:
+  - type: kafka
+    metadata:
+      bootstrapServers: kafka-service:9092
+      consumerGroup: sample-consumer
+      topic: buy-icecream
+      lagThreshold: "5" #must be a string
+      offsetResetPolicy: latest

@@ -1,0 +1,11 @@
+server:
+  port: 8099
+spring:
+  application:
+    name: sample-consumer
+  kafka:
+    bootstrap-servers: kafka-service:9092
+    consumer:
+      group-id: sample-consumer
+      max-poll-records: 1
+
